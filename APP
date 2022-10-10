@@ -1,0 +1,30 @@
+import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './UI/Theme';
+import Header from '../components/UI/Header';
+
+import { BrowserRouter as Router, Routes, Route,} from "react-router-dom";
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Router>
+      <Header/>
+      <Routes>
+      <Route exact  path='/home' element={ <div>home</div>}/>
+      <Route exact path='/Services' element={<div>Service</div>}/>
+      <Route exact path='/CustomSoftware' element={<div>customsoftware</div>}/>
+      <Route exact path='/mobileapps' element={<div>mobileapps</div>}/>
+      <Route exact  path='/websites' element={ <div>website</div>}/>
+      <Route exact path='/revolution' element={ <div>revolution</div>}/>
+      <Route exact path='/about' element={ <div>About</div>}/>
+      <Route exact path='/contact' element={<div>contact</div>}/>
+      <Route exact path='/estimate' element={ <div>estimate</div>}/>
+
+      </Routes>
+      </Router>
+      
+      </ThemeProvider>
+  );
+}
+
+export default App;
