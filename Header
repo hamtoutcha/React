@@ -1,0 +1,170 @@
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import { makeStyles } from '@mui/styles';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Button from '@mui/material/Button';
+import { Link } from "react-router-dom";
+
+
+
+
+import logo from '../../assets/logo.svg'
+import { useState, useEffect } from 'react';
+
+
+
+function ElevationScroll(props) {
+  const { children
+  } = props;
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
+
+const useStyles = makeStyles((theme) => ({
+
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "3em"
+  },
+  bcc: {
+    padding: 0
+  },
+
+  tabcontainer: {
+    marginLeft: "auto"
+  },
+  logo: {
+
+    height: "7em"
+  },
+
+  tabb: {
+    ...theme.typography.tabb,
+    minWidth: 10,
+    marginLeft: "25px"
+  },
+
+  button: {
+    ...theme.typography.estimate,
+    borderRadius: "50px",
+    marginRight: "25px;",
+    marginLeft: "50px",
+  
+
+  }
+
+}));
+
+
+
+export default function Header(props) {
+  const classes = useStyles();
+  const [value, setValue] = useState("one");
+
+  const handleChange = (e, value) => {
+    setValue(value)
+  }
+  useEffect(() => {
+    if (window.location.pathname === "/" && value !== 0) {
+      setValue(0);
+    } else if (window.location.pathname === "/Services" && value !== 0) {
+      setValue(1);
+    } else if (window.location.pathname === "/CustomSoftware" && value !== 0) {
+      setValue(2);
+    } else if (window.location.pathname === "/mobileapps" && value !== 0) {
+      setValue(3);
+    } else if (window.location.pathname === "/about" && value !== 0) {
+      setValue(4);
+    } else if (window.location.pathname === "/contact" && value !== 0) {
+      setValue(5);
+    }
+
+  }, [value]);
+
+  return (
+    <React.Fragment>
+  
+      <ElevationScroll>
+        <AppBar position='fixed'>
+          <Toolbar disableGutters>
+            <Link to='/home'>
+              {' '}
+              <Button
+                element={Link}
+                onClick={() => setValue(0)}
+                disableRipple
+                className={classes.bcc}
+              >
+                <img alt='company logo' className={classes.logo} src={logo} />
+              </Button>
+            </Link>
+            <Tabs
+              value={value}
+              className={classes.tabcontainer}
+              onChange={handleChange}
+            >
+              <Link to='/home'>
+                <Tab
+                  className={classes.tabb}
+                  label='Home'
+                  value='one'
+                  element={Link}
+                  Link
+                  to='/home'
+                />
+              </Link>
+              <Link to='/Services'>
+                <Tab className={classes.tabb} label='Service' value='two' />
+              </Link>
+              <Tab
+                className={classes.tabb}
+                label='Revol'
+                value='three'
+                element={Link}
+                to='/CustomSoftware'
+              />
+              <Tab
+                className={classes.tabb}
+                label='bkr'
+                value='four'
+                element={Link}
+                to='/mobileapps'
+              />
+              <Tab
+                className={classes.tabb}
+                label='Contact us'
+                value='five'
+                element={Link}
+                to='/contact'
+              />
+            </Tabs>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.button}
+            >
+              {' '}
+              Free estimate
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className={classes.toolbarMargin} />
+   
+
+    </React.Fragment>
+  );
+
+
+}
